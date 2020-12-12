@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+    
+    <bean id="xmlJob" class="com.billjc.race.util.XMLJob"></bean>
+    
+	<bean id="xmlJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="xmlJob"></property>
+		<property name="targetMethod">
+			<value>run</value>
+		</property>
+		<!--将并发设置为false -->
+	    <property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="xmlJobDetail" />
+        <!-- cron表达式 -->
+        <property name="cronExpression" value="* 0/5 * * * ?" />
+    </bean>
+
+    <bean id="startQuertz"  class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="false">
+        <property name="triggers">
+            <list>
+                <!--作业调度器,list下可加入其他的调度器 -->
+                <ref bean="trigger" />
+            </list>
+        </property>
+    </bean>
+</beans>
