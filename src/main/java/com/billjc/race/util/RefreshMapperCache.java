@@ -37,19 +37,29 @@ public class RefreshMapperCache {
     public int refreshMapper() {
         try {
             Configuration configuration = sqlSessionFactory.getConfiguration();
-            // 清理缓存数据
-            this.removeConfig(configuration);
+	        // 清理缓存数据
+	   		this.removeConfig(configuration);
             // 重新加载
             for (Resource configLocation : mapperLocations) {
                 try {
             		XMLMapperBuilder xmlMapperBuilder = new XMLMapperBuilder(
                     		configLocation.getInputStream(), 
                     		configuration, configLocation.toString(), configuration.getSqlFragments());
-                    xmlMapperBuilder.parse();
+            		boolean flag = true;
+                    for(String name:configuration.getMappedStatementNames()){
+                    	if(configuration.getMappedStatement(name) != null){
+                    		flag = false;
+                    		break;
+                    	}
+                    }
+                    if(flag){
+                    	xmlMapperBuilder.parse();	
+                    }
+            		
                 } catch (IOException e) {
                     return -1;
                 } catch (BuilderException e){
-                	continue;
+                	e.printStackTrace();
                 }
             }
             changeResourceNameMap.clear();

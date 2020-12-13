@@ -3,6 +3,7 @@ package com.billjc.race.service;
 import java.util.List;
 
 import com.billjc.race.pojo.Employee;
+import com.billjc.race.pojo.Employer;
 
 /**
  * @category service层业务接口
@@ -15,5 +16,7 @@ public interface ValidateService {
 	public int validateXMLChange(String fileName);
 	
 	public List<Employee> selectEmployeeInfo();
+	
+	public List<Employer> selectEmployerData();
 	
 }

@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.billjc.race.dao.EmployeeMapper;
+import com.billjc.race.dao.EmployerMapper;
 import com.billjc.race.pojo.Employee;
+import com.billjc.race.pojo.Employer;
 import com.billjc.race.service.ValidateService;
 import com.billjc.race.util.ValidateXMLUtil;
 
@@ -23,6 +25,9 @@ public class ValidateServiceImpl implements ValidateService{
 
 	@Autowired
 	private EmployeeMapper employeeDao;
+	
+	@Autowired
+	private EmployerMapper employerDao;
 
 	@Override
 	public int validateXMLChange(String fileName) {
@@ -43,5 +48,9 @@ public class ValidateServiceImpl implements ValidateService{
 	public List<Employee> selectEmployeeInfo() {
 		return employeeDao.selectEmployeeInfo();
 	}
-
+	
+	@Override
+	public List<Employer> selectEmployerData() {
+		return employerDao.selectEmployerData();
+	}
 }

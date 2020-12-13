@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.billjc.race.pojo.Employee;
+import com.billjc.race.pojo.Employer;
 import com.billjc.race.service.ValidateService;
 /**
  * 用于动态校验XML文件，返回校验结果
@@ -66,6 +67,16 @@ public class DynamicValiController{
     @RequestMapping(value="/dynamic/data",method=RequestMethod.GET)  
 	public String dataInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
     	try{
+    		response.getWriter().write("<h3>Employer data is:</br>");
+    		List<Employer> dataListEmployer = validateService.selectEmployerData();
+        	for (int i=0; i<dataListEmployer.size(); i++) {
+        		Employer record = dataListEmployer.get(i);
+        		response.getWriter().write(
+        				setNullToString(record.getId())+"&nbsp;"+
+        				"name:&nbsp;"+setNullToString(record.getName())+"&nbsp;"+
+        				"&nbsp;telephone:&nbsp;"+setNullToString(record.getTelephone()));
+        		response.getWriter().write("</br>");
+        	}
     		List<Employee> dataListEmployee = validateService.selectEmployeeInfo();
         	response.getWriter().write("<h3>Employee data is:</br>");
         	for (int i=0; i<dataListEmployee.size(); i++) {

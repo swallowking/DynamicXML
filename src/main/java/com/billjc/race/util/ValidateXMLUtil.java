@@ -76,7 +76,7 @@ public class ValidateXMLUtil {
 							File.separator+"billjc"+File.separator+"race"+
 							File.separator+"dao"+File.separator+""+xmlFileName+".xml";
 					System.out.println(xmlFilePath+"########################################");
-					xmlFileCheck(xmlFilePath, xmlFileName, changeFileMap);
+					xmlFileCheck(xmlFilePath, xmlFileName, changeFileMap, redistributeFlag);
 				}
 			} else {
 				//分布式环境下--单文件情况
@@ -84,7 +84,7 @@ public class ValidateXMLUtil {
 				String xmlFileName = xmlFilePath.substring(
 						xmlFilePath.lastIndexOf(File.separatorChar)+1,
 						xmlFilePath.indexOf(".xml"));
-				xmlFileCheck(xmlFilePath, xmlFileName, changeFileMap);
+				xmlFileCheck(xmlFilePath, xmlFileName, changeFileMap, redistributeFlag);
 			}
 			
 			if (changeFileMap.size() == 0 && allFlag != 1) {
@@ -116,7 +116,7 @@ public class ValidateXMLUtil {
 	 * @param changeFileMap 变更文件map
 	 */
 	private static Map<String,Object> xmlFileCheck(String xmlFilePath, String xmlFileName, 
-			Map<String,Object> changeFileMap){
+			Map<String,Object> changeFileMap, Boolean redisFlag){
 		File xmlFile = new File(xmlFilePath);
 		String md5Str = getMd5ByFile(xmlFile);
 		String xmlCode = edis.get(xmlFileName);
@@ -132,14 +132,15 @@ public class ValidateXMLUtil {
 		if (StringUtils.isEmpty(xmlCode)) {//如果为添加
 			edis.set(xmlFileName,md5Str);
 			changeFileMap.put(xmlFileName,xmlFileName);
-			fileOutput(xmlFilePath,xmlFile,targetFilePath);
 		} else {
 			if (!xmlCode.equals(md5Str)) {//如果为修改
 				edis.pexpire(xmlFileName, 1);
 				edis.set(xmlFileName, md5Str);
 				changeFileMap.put(xmlFileName,xmlFileName);
-				fileOutput(xmlFilePath,xmlFile,targetFilePath);
 			}
+		}
+		if (redisFlag) {
+			fileOutput(xmlFilePath,xmlFile,targetFilePath);
 		}
 		return changeFileMap;
 	}
