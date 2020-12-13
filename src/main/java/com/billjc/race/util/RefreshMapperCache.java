@@ -49,7 +49,7 @@ public class RefreshMapperCache {
                 } catch (IOException e) {
                     return -1;
                 } catch (BuilderException e){
-                	e.printStackTrace();
+                	continue;
                 }
             }
             changeResourceNameMap.clear();

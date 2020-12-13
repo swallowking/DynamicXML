@@ -27,6 +27,6 @@ public class SpringBootApplicationStart extends SpringBootServletInitializer {
 
 	public static void main(String[] args){
 		SpringApplication.run(SpringBootApplicationStart.class, args);
-//		ConfigClientUtil.getConfigCenterValue();
+		ConfigClientUtil.getConfigCenterValue();
 	}
 }

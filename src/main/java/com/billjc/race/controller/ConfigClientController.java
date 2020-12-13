@@ -21,7 +21,7 @@ public class ConfigClientController {
 
 	private static Log log  = LogFactory.getLog(ConfigClientController.class);
 
-//	@Value("${mapperFilePath}")
+	@Value("${mapperFilePath}")
     private String configValue;
 
     /**
