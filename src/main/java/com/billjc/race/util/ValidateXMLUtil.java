@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -62,11 +63,13 @@ public class ValidateXMLUtil {
 					redistributeFlag = true;
 				}
 			}
+			String xmlFileName = "";
+			String xmlFilePath = "";
 			if (!redistributeFlag) {
 				//单服务情况
 				for (int z=0; z<fileNameList.size(); z++) {
-					String xmlFileName = fileNameList.get(z);
-					String xmlFilePath = ""+
+					xmlFileName = fileNameList.get(z);
+					xmlFilePath = ""+
 //							System.getProperty("user.dir")+
 //							File.separator+"target"+
 							".."+File.separator+"webapps"+
@@ -78,15 +81,28 @@ public class ValidateXMLUtil {
 					System.out.println(xmlFilePath+"########################################");
 					xmlFileCheck(xmlFilePath, xmlFileName, changeFileMap, redistributeFlag);
 				}
+				
 			} else {
 				//分布式环境下--单文件情况
-				String xmlFilePath = edis.get("xmlFilePath");//文件路径
-				String xmlFileName = xmlFilePath.substring(
+				xmlFilePath = edis.get("xmlFilePath");//文件路径
+				System.out.println("************************************************");
+				System.out.println("##########edis.get(xmlFilePath)#####"+xmlFilePath);
+				System.out.println("************************************************");
+
+				if (StringUtils.isEmpty(xmlFilePath)) {
+					xmlFilePath = File.separator+"home"+File.separator+
+					"billjcRace"+File.separator+"target"+File.separator+"mapperFile"+File.separator+"EmployeeMapper.xml";
+				}
+				System.out.println("************************************************");
+				xmlFileName = xmlFilePath.substring(
 						xmlFilePath.lastIndexOf(File.separatorChar)+1,
 						xmlFilePath.indexOf(".xml"));
+				System.out.println("##########xmlFileName#####"+xmlFileName);
+				System.out.println("************************************************");
+
 				xmlFileCheck(xmlFilePath, xmlFileName, changeFileMap, redistributeFlag);
 			}
-			
+
 			if (changeFileMap.size() == 0 && allFlag != 1) {
 				return 0;
 			} else {
@@ -103,7 +119,10 @@ public class ValidateXMLUtil {
 				refreshMapper.setChangeResourceNameList(changeFileMap);
 				return refreshMapper.refreshMapper();
 			}
-		} catch (Exception e) {
+		} catch (FileNotFoundException e) {
+			return -9;
+		} 
+		catch (Exception e) {
 			e.printStackTrace();
 			return -1;
 		}
@@ -114,15 +133,17 @@ public class ValidateXMLUtil {
 	 * @param xmlFilePath XML文件路径
 	 * @param xmlFileName XML文件名称
 	 * @param changeFileMap 变更文件map
+	 * @throws IOException 
+	 * @throws NoSuchAlgorithmException 
 	 */
 	private static Map<String,Object> xmlFileCheck(String xmlFilePath, String xmlFileName, 
-			Map<String,Object> changeFileMap, Boolean redisFlag){
+			Map<String,Object> changeFileMap, Boolean redisFlag) throws NoSuchAlgorithmException, IOException{
 		File xmlFile = new File(xmlFilePath);
 		String md5Str = getMd5ByFile(xmlFile);
 		String xmlCode = edis.get(xmlFileName);
 		String targetFilePath = 
-//				System.getProperty("user.dir")+
-//				File.separator+"target"+
+//					System.getProperty("user.dir")+
+//					File.separator+"target"+
 				".."+File.separator+"webapps"+
 				File.separator+"billjcRace"+
 				File.separator+"WEB-INF"+
@@ -199,8 +220,11 @@ public class ValidateXMLUtil {
 	 *
 	 * @param file 文件值
 	 * @return value MD5编码值
+	 * @throws NoSuchAlgorithmException 
+	 * @throws IOException 
 	 */
-	private static String getMd5ByFile(File file) {
+	private static String getMd5ByFile(File file) throws 
+		FileNotFoundException,NoSuchAlgorithmException, IOException {
         String value = null;
         FileInputStream in = null;
         try {
@@ -212,8 +236,6 @@ public class ValidateXMLUtil {
     			md5.update(buffer, 0, numRead);
     		}
             value = bufferToHex(md5.digest());
-        } catch (Exception e) {
-            e.printStackTrace();
         } finally {
         	try {
         		if(in != null) {

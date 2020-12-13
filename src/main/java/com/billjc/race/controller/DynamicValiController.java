@@ -48,6 +48,8 @@ public class DynamicValiController{
     	    	return "index"; 
     	    } else if (result == 0) {
     	    	return "noChange";
+    	    } else if (result == -9) {
+    	    	return "paramsIncorrect";
     	    } else {
     	    	return "error";
     	    }
