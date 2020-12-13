@@ -25,10 +25,10 @@ public class RefreshMapperCache {
     private static SqlSessionFactory sqlSessionFactory;
     private Resource[] mapperLocations;
     private Map<String,Object> changeResourceNameMap = new HashMap<String, Object>();
-    private static RefreshMapperCache refreshMapperSingleton = null;
+    private static RefreshMapperCache refreshMapperSingleton;
     
-    public static RefreshMapperCache getInstance() {
-    	if (refreshMapperSingleton == null ) {
+    public static synchronized RefreshMapperCache getInstance() {
+    	if (refreshMapperSingleton == null) {
     		refreshMapperSingleton = new RefreshMapperCache();
     	}
         return refreshMapperSingleton;
