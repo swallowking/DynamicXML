@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,11 +23,11 @@ import com.billjc.race.service.ValidateService;
  * @since   2020/12/5
  */
 @Controller
+@RefreshScope
 @RequestMapping("/api") 
 public class DynamicValiController{
 	@Autowired
 	private ValidateService validateService;
-
 	/**
 	 * 校验XML文件是否发生变更
 	 * 1.发生变更--重新加载XML配置文件; 2.未发生变更--返回未发生变更信息; 3.执行出错--返回错误信息

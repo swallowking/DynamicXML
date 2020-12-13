@@ -8,6 +8,8 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.annotation.EnableScheduling;
+
+import com.billjc.race.util.ConfigClientUtil;
 /**
  * 初始化启动
  * 
@@ -22,7 +24,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Import({com.billjc.race.util.SpringUtils.class,com.billjc.race.util.XMLScheduleTask.class})
 @EnableScheduling
 public class SpringBootApplicationStart extends SpringBootServletInitializer {
+
 	public static void main(String[] args){
 		SpringApplication.run(SpringBootApplicationStart.class, args);
+		ConfigClientUtil.getConfigCenterValue();
 	}
 }

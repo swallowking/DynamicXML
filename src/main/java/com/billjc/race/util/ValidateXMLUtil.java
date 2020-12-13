@@ -16,7 +16,6 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.util.StringUtils;
@@ -31,22 +30,18 @@ import redis.clients.jedis.Jedis;
  *
  */
 public class ValidateXMLUtil {
-	@Value("${mapperFilePath}")
-    private static String mapperConfigValue;
+
 	// 默认编码字符组合
 	private static char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 	private static Jedis edis = new Jedis();
     private static Log log  = LogFactory.getLog(ValidateXMLUtil.class);
 
 	static {
-		edis.set("xmlFilePath", mapperConfigValue);
-		log.info("xmlFilePath#######"+mapperConfigValue);
-		
 		try {
 			MessageDigest.getInstance("MD5");
 //			edis.flushAll();
 		} catch (NoSuchAlgorithmException nsaex) {
-			System.err.println(ValidateXMLUtil.class.getName() + "init error!");
+			log.error(ValidateXMLUtil.class.getName() + "init error!");
 			nsaex.printStackTrace();
 		}
 	}
@@ -61,7 +56,14 @@ public class ValidateXMLUtil {
 	public static int validateXMLChange(List<String> fileNameList, int allFlag) {
 		try {
 			Map<String,Object> changeFileMap = new HashMap<String,Object>();
-			if (edis.get("xmlFilePath") == null || !"redis".equals(fileNameList.get(0))) {
+			boolean redistributeFlag = false;
+			if (fileNameList != null && fileNameList.size() > 0) {
+				if ("redis".equals(fileNameList.get(0))) {
+					redistributeFlag = true;
+				}
+			}
+			if (!redistributeFlag) {
+				//单服务情况
 				for (int z=0; z<fileNameList.size(); z++) {
 					String xmlFileName = fileNameList.get(z);
 					String xmlFilePath = ""+
@@ -77,7 +79,7 @@ public class ValidateXMLUtil {
 					xmlFileCheck(xmlFilePath, xmlFileName, changeFileMap);
 				}
 			} else {
-				//分布式环境下单文件情况
+				//分布式环境下--单文件情况
 				String xmlFilePath = edis.get("xmlFilePath");//文件路径
 				String xmlFileName = xmlFilePath.substring(
 						xmlFilePath.lastIndexOf(File.separatorChar)+1,
