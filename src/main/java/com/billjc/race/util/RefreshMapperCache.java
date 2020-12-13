@@ -12,7 +12,14 @@ import org.apache.ibatis.builder.xml.XMLMapperBuilder;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.core.io.Resource;
-
+/**
+ * 清除Mybatis sqlSessionFactory Configuration配置，
+ * 重新加载 Resource 数据源
+ *
+ * @author   swallow
+ * @version  1.0
+ * @since    2020/12/5
+ */
 public class RefreshMapperCache {
     private Log log  = LogFactory.getLog(RefreshMapperCache.class);
     private static SqlSessionFactory sqlSessionFactory;
@@ -34,7 +41,6 @@ public class RefreshMapperCache {
             // 重新加载
             for (Resource configLocation : mapperLocations) {
                 try {
-//                	System.out.println("######"+configLocation.toString()+"########");
 //                	if (changeResourceNameMap.containsKey(configLocation.getFilename().replace(".xml", ""))) {
                 		XMLMapperBuilder xmlMapperBuilder = new XMLMapperBuilder(
                         		configLocation.getInputStream(), 
@@ -46,9 +52,7 @@ public class RefreshMapperCache {
                     return -1;
                 }
             }
-            //清空被修改过后的文件名称
             changeResourceNameMap.clear();
-
         } catch (Exception e) {
             log.error(e.toString());
             return -1;
@@ -69,7 +73,7 @@ public class RefreshMapperCache {
 	}
 
 	/**
-     * 清空Configuration中的缓存
+     * 清空Configuration中缓存
      * @param configuration MapperConfiguration
      * @throws Exception 异常
      */
