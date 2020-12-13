@@ -41,13 +41,10 @@ public class RefreshMapperCache {
             // 重新加载
             for (Resource configLocation : mapperLocations) {
                 try {
-//                	if (changeResourceNameMap.containsKey(configLocation.getFilename().replace(".xml", ""))) {
-                		XMLMapperBuilder xmlMapperBuilder = new XMLMapperBuilder(
-                        		configLocation.getInputStream(), 
-                        		configuration, configLocation.toString(), configuration.getSqlFragments());
-                        xmlMapperBuilder.parse();
-//                	}
-                    
+            		XMLMapperBuilder xmlMapperBuilder = new XMLMapperBuilder(
+                    		configLocation.getInputStream(), 
+                    		configuration, configLocation.toString(), configuration.getSqlFragments());
+                    xmlMapperBuilder.parse();
                 } catch (IOException e) {
                     return -1;
                 }
