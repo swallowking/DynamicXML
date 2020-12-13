@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.billjc.race.dao.EmployerMapper"> 
+ 	<select id="selectEmployerData" resultType="com.billjc.race.pojo.Employer">
+        select id,name,telephone from employer
+    </select>
+</mapper>
