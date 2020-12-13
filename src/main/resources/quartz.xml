@@ -27,7 +27,6 @@
     <bean id="startQuertz"  class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="false">
         <property name="triggers">
             <list>
-                <!--作业调度器,list下可加入其他的调度器 -->
                 <ref bean="trigger" />
             </list>
         </property>
