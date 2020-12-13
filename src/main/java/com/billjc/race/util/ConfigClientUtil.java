@@ -23,7 +23,7 @@ public class ConfigClientUtil {
 
 	 public static String getConfigCenterValue(){
 	    	HttpClient httpClient = HttpClientBuilder.create().build();
-			HttpGet httpGet = new HttpGet("http://127.0.0.1:8080/billjcRace/api/config");
+			HttpGet httpGet = new HttpGet("http://127.0.0.1:8080/billjcRace/api/config/");
 			HttpResponse response = null;
 			String mapperConfigValue = "";
 			try {

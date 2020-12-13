@@ -67,11 +67,11 @@ public class ValidateXMLUtil {
 				for (int z=0; z<fileNameList.size(); z++) {
 					String xmlFileName = fileNameList.get(z);
 					String xmlFilePath = ""+
-							System.getProperty("user.dir")+
-							File.separator+"target"+
-//							".."+File.separator+"webapps"+
-//							File.separator+"billjcRace"+
-//							File.separator+"WEB-INF"+
+//							System.getProperty("user.dir")+
+//							File.separator+"target"+
+							".."+File.separator+"webapps"+
+							File.separator+"billjcRace"+
+							File.separator+"WEB-INF"+
 							File.separator+"classes"+File.separator+"com"+
 							File.separator+"billjc"+File.separator+"race"+
 							File.separator+"dao"+File.separator+""+xmlFileName+".xml";
@@ -121,11 +121,11 @@ public class ValidateXMLUtil {
 		String md5Str = getMd5ByFile(xmlFile);
 		String xmlCode = edis.get(xmlFileName);
 		String targetFilePath = 
-				System.getProperty("user.dir")+
-				File.separator+"target"+
-//				".."+File.separator+"webapps"+
-//				File.separator+"billjcRace"+
-//				File.separator+"WEB-INF"+
+//				System.getProperty("user.dir")+
+//				File.separator+"target"+
+				".."+File.separator+"webapps"+
+				File.separator+"billjcRace"+
+				File.separator+"WEB-INF"+
 				File.separator+"classes"+File.separator+"com"+
 				File.separator+"billjc"+File.separator+"race"+
 				File.separator+"dao"+File.separator+""+xmlFileName+".xml";

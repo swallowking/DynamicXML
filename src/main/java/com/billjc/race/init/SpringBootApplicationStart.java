@@ -5,8 +5,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import com.billjc.race.util.ConfigClientUtil;
@@ -27,6 +29,14 @@ public class SpringBootApplicationStart extends SpringBootServletInitializer {
 
 	public static void main(String[] args){
 		SpringApplication.run(SpringBootApplicationStart.class, args);
+		placeholderConfigurer();
 		ConfigClientUtil.getConfigCenterValue();
+	}
+	
+	@Bean
+	public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
+        PropertySourcesPlaceholderConfigurer c = new PropertySourcesPlaceholderConfigurer();
+        c.setIgnoreUnresolvablePlaceholders(true);
+        return c;
 	}
 }

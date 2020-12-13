@@ -9,8 +9,10 @@
     
   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"></property>
-        <!-- 自动扫描mapping.xml文件 -->
+        <!-- 自动扫描Mapper.xml文件 -->
         <property name="mapperLocations" value="classpath*:com/billjc/race/dao/**/*Mapper.xml"></property>
   </bean>
-    
+  <!--  
+  <context:property-placeholder location="classpath*:resources/*.properties"/>
+  -->
 </beans>
