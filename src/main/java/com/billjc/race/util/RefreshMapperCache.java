@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.ibatis.builder.BuilderException;
 import org.apache.ibatis.builder.xml.XMLMapperBuilder;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -50,10 +51,13 @@ public class RefreshMapperCache {
                     xmlMapperBuilder.parse();
                 } catch (IOException e) {
                     return -1;
+                } catch (BuilderException e){
+                	removeConfig(configuration);
                 }
             }
             changeResourceNameMap.clear();
         } catch (Exception e) {
+        	e.printStackTrace();
             log.error(e.toString());
             return -1;
         }

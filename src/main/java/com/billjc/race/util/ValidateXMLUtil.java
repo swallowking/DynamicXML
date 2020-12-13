@@ -30,11 +30,11 @@ import redis.clients.jedis.Jedis;
  *
  */
 public class ValidateXMLUtil {
-
-	// 默认编码字符组合
-	private static char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
-	private static Jedis edis = new Jedis();
+	
     private static Log log  = LogFactory.getLog(ValidateXMLUtil.class);
+    // 默认编码字符组合
+ 	private static char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+ 	private static Jedis edis = new Jedis();
 
 	static {
 		try {
@@ -120,7 +120,15 @@ public class ValidateXMLUtil {
 		File xmlFile = new File(xmlFilePath);
 		String md5Str = getMd5ByFile(xmlFile);
 		String xmlCode = edis.get(xmlFileName);
-		String targetFilePath = "F:\\eclipseWorkSpace\\billjc-race-project\\src\\main\\java\\com\\billjc\\race\\dao\\EmployeeMapper.xml";
+		String targetFilePath = 
+				System.getProperty("user.dir")+
+				File.separator+"target"+
+//				".."+File.separator+"webapps"+
+//				File.separator+"billjcRace"+
+//				File.separator+"WEB-INF"+
+				File.separator+"classes"+File.separator+"com"+
+				File.separator+"billjc"+File.separator+"race"+
+				File.separator+"dao"+File.separator+""+xmlFileName+".xml";
 		if (StringUtils.isEmpty(xmlCode)) {//如果为添加
 			edis.set(xmlFileName,md5Str);
 			changeFileMap.put(xmlFileName,xmlFileName);
@@ -171,16 +179,17 @@ public class ValidateXMLUtil {
             }
             catch (IOException e)
             {
-                throw new RuntimeException("读取关闭失败");
+            	log.error(e.toString());
             }
             try
             {
-                if(bufw!=null)
+                if (bufw!=null) {
                     bufw.close();
+                }
             }
             catch (IOException e)
             {
-                throw new RuntimeException("写入关闭失败");
+            	log.error(e.toString());
             }
         }
 	}
