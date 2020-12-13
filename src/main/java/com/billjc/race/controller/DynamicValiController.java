@@ -66,10 +66,10 @@ public class DynamicValiController{
     @RequestMapping(value="/dynamic/data",method=RequestMethod.GET)  
 	public String dataInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
     	try{
-    		List<Employee> dataList = validateService.selectEmployeeInfo();
-        	response.getWriter().write("<h3>data is:</br>");
-        	for (int i=0; i<dataList.size(); i++) {
-        		Employee record = dataList.get(i);
+    		List<Employee> dataListEmployee = validateService.selectEmployeeInfo();
+        	response.getWriter().write("<h3>Employee data is:</br>");
+        	for (int i=0; i<dataListEmployee.size(); i++) {
+        		Employee record = dataListEmployee.get(i);
         		response.getWriter().write(
         				setNullToString(record.getId())+"&nbsp;"+
         				"name:&nbsp;"+setNullToString(record.getName())+"&nbsp;"+

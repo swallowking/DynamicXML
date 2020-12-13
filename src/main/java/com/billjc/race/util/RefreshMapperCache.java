@@ -26,12 +26,9 @@ public class RefreshMapperCache {
     private static SqlSessionFactory sqlSessionFactory;
     private Resource[] mapperLocations;
     private Map<String,Object> changeResourceNameMap = new HashMap<String, Object>();
-    private static RefreshMapperCache refreshMapperSingleton;
+    private static RefreshMapperCache refreshMapperSingleton = new RefreshMapperCache();
     
-    public static synchronized RefreshMapperCache getInstance() {
-    	if (refreshMapperSingleton == null) {
-    		refreshMapperSingleton = new RefreshMapperCache();
-    	}
+    public static RefreshMapperCache getInstance() {
         return refreshMapperSingleton;
     }
 
@@ -52,7 +49,7 @@ public class RefreshMapperCache {
                 } catch (IOException e) {
                     return -1;
                 } catch (BuilderException e){
-                	removeConfig(configuration);
+                	e.printStackTrace();
                 }
             }
             changeResourceNameMap.clear();

@@ -22,7 +22,7 @@ import com.billjc.race.util.ValidateXMLUtil;
 public class ValidateServiceImpl implements ValidateService{
 
 	@Autowired
-	private EmployeeMapper dao;
+	private EmployeeMapper employeeDao;
 
 	@Override
 	public int validateXMLChange(String fileName) {
@@ -41,7 +41,7 @@ public class ValidateServiceImpl implements ValidateService{
 
 	@Override
 	public List<Employee> selectEmployeeInfo() {
-		return dao.selectEmployeeInfo();
+		return employeeDao.selectEmployeeInfo();
 	}
 
 }
