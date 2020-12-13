@@ -74,6 +74,7 @@ public class RefreshMapperCache {
 
 	/**
      * 清空Configuration中缓存
+     *
      * @param configuration MapperConfiguration
      * @throws Exception 异常
      */
