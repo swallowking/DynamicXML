@@ -25,10 +25,13 @@ public class RefreshMapperCache {
     private static SqlSessionFactory sqlSessionFactory;
     private Resource[] mapperLocations;
     private Map<String,Object> changeResourceNameMap = new HashMap<String, Object>();
-
-    private static RefreshMapperCache singletonHungary = new RefreshMapperCache();
+    private static RefreshMapperCache refreshMapperSingleton = null;
+    
     public static RefreshMapperCache getInstance() {
-        return singletonHungary;
+    	if (refreshMapperSingleton == null ) {
+    		refreshMapperSingleton = new RefreshMapperCache();
+    	}
+        return refreshMapperSingleton;
     }
 
     public RefreshMapperCache(){}
