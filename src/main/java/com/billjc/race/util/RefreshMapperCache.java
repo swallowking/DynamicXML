@@ -45,16 +45,7 @@ public class RefreshMapperCache {
             		XMLMapperBuilder xmlMapperBuilder = new XMLMapperBuilder(
                     		configLocation.getInputStream(), 
                     		configuration, configLocation.toString(), configuration.getSqlFragments());
-            		boolean flag = true;
-                    for(String name:configuration.getMappedStatementNames()){
-                    	if(configuration.getMappedStatement(name) != null){
-                    		flag = false;
-                    		break;
-                    	}
-                    }
-                    if(flag){
-                    	xmlMapperBuilder.parse();	
-                    }
+                    xmlMapperBuilder.parse();	
             		
                 } catch (IOException e) {
                     return -1;
