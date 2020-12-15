@@ -18,10 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RefreshScope
 @RequestMapping("/api")
 public class ConfigClientController {
-
-	private static Log log  = LogFactory.getLog(ConfigClientController.class);
-
-	@Value("${mapperFilePath}")
+    private static Log log  = LogFactory.getLog(ConfigClientController.class);
+    @Value("${mapperFilePath}")
     private String configValue;
 
     /**
