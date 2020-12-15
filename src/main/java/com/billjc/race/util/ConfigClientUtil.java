@@ -2,6 +2,8 @@ package com.billjc.race.util;
 
 import java.io.IOException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -20,31 +22,35 @@ import redis.clients.jedis.Jedis;
  * @since    2020/12/5
  */
 public class ConfigClientUtil {
-
-	 public static String getConfigCenterValue(){
-	    	HttpClient httpClient = HttpClientBuilder.create().build();
-			HttpGet httpGet = new HttpGet("http://127.0.0.1:8080/billjcRace/api/config/");
-			HttpResponse response = null;
-			String mapperConfigValue = "";
-			try {
-				response = httpClient.execute(httpGet);
-				HttpEntity responseEntity = response.getEntity();
-				if (responseEntity != null) {
-					mapperConfigValue = EntityUtils.toString(responseEntity);
-		    		@SuppressWarnings("resource")
-					Jedis edis = new Jedis();
-		    		edis.set("xmlFilePath", mapperConfigValue);
-				}
-			} catch (ClientProtocolException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-				httpClient = null;
-				if (response != null) {
-					response = null;
-				}
+	
+	private static Log log  = LogFactory.getLog(ConfigClientUtil.class);
+	
+	public static String getConfigCenterValue(){
+    	HttpClient httpClient = HttpClientBuilder.create().build();
+		HttpGet httpGet = new HttpGet("http://127.0.0.1:8080/billjcRace/api/config/");
+		HttpResponse response = null;
+		String mapperConfigValue = "";
+		try {
+			response = httpClient.execute(httpGet);
+			HttpEntity responseEntity = response.getEntity();
+			if (responseEntity != null) {
+				mapperConfigValue = EntityUtils.toString(responseEntity);
+	    		@SuppressWarnings("resource")
+				Jedis edis = new Jedis();
+	    		edis.set("xmlFilePath", mapperConfigValue);
 			}
-			return mapperConfigValue;
-	    }
+		} catch (ClientProtocolException e) {
+			log.error(e.toString());
+			return "error";
+		} catch (IOException e) {
+			log.error(e.toString());
+			return "error";
+		} finally {
+			httpClient = null;
+			if (response != null) {
+				response = null;
+			}
+		}
+		return mapperConfigValue;
+    }
 }

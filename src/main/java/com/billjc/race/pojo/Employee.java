@@ -25,7 +25,8 @@ public class Employee {
 		this.age = age;
 	}
 
-	@Override public  String toString(){
+	@Override 
+	public String toString(){
 		return id+"\t"+name+"\t"+age;
 	}
 }

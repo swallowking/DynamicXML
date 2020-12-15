@@ -22,7 +22,7 @@ import org.springframework.core.io.Resource;
  * @since    2020/12/5
  */
 public class RefreshMapperCache {
-    private Log log  = LogFactory.getLog(RefreshMapperCache.class);
+    private static Log log  = LogFactory.getLog(RefreshMapperCache.class);
     private static SqlSessionFactory sqlSessionFactory;
     private Resource[] mapperLocations;
     private Map<String,Object> changeResourceNameMap = new HashMap<String, Object>();
@@ -48,14 +48,15 @@ public class RefreshMapperCache {
                     xmlMapperBuilder.parse();	
             		
                 } catch (IOException e) {
+                	log.error(e.toString());
                     return -1;
                 } catch (BuilderException e){
-                	e.printStackTrace();
+                	log.error(e.toString());
+                	return -1;
                 }
             }
             changeResourceNameMap.clear();
         } catch (Exception e) {
-        	e.printStackTrace();
             log.error(e.toString());
             return -1;
         }
@@ -75,9 +76,9 @@ public class RefreshMapperCache {
 	}
 
 	/**
-     * 清空Configuration中缓存
+     * 清空Configuration对象中缓存
      *
-     * @param configuration MapperConfiguration
+     * @param configuration Configuration
      * @throws Exception 异常
      */
     private void removeConfig(Configuration configuration) throws Exception {

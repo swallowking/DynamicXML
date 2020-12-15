@@ -14,7 +14,7 @@ import com.billjc.race.service.ValidateService;
 import com.billjc.race.util.ValidateXMLUtil;
 
 /**
- * 用于service业务层具体实现
+ * service业务层具体实现
  *
  * @author   swallow
  * @version  1.0

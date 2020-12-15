@@ -6,7 +6,7 @@ import com.billjc.race.pojo.Employee;
 import com.billjc.race.pojo.Employer;
 
 /**
- * @category service层业务接口
+ * @category service业务层接口
  * @author   swallow
  * @version  1.0
  * @since    2020/12/5

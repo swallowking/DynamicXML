@@ -40,10 +40,8 @@ public class ValidateXMLUtil {
 	static {
 		try {
 			MessageDigest.getInstance("MD5");
-//			edis.flushAll();
-		} catch (NoSuchAlgorithmException nsaex) {
+		} catch (NoSuchAlgorithmException e) {
 			log.error(ValidateXMLUtil.class.getName() + "init error!");
-			nsaex.printStackTrace();
 		}
 	}
 	
@@ -70,9 +68,9 @@ public class ValidateXMLUtil {
 				for (int z=0; z<fileNameList.size(); z++) {
 					xmlFileName = fileNameList.get(z);
 					xmlFilePath = ""+
-//							System.getProperty("user.dir")+
-//							File.separator+"target"+
-							".."+File.separator+"webapps"+
+							System.getProperty("user.dir")+
+							File.separator+"target"+
+//							".."+File.separator+"webapps"+
 							File.separator+"billjcRace"+
 							File.separator+"WEB-INF"+
 							File.separator+"classes"+File.separator+"com"+
@@ -123,13 +121,14 @@ public class ValidateXMLUtil {
 			return -9;
 		} 
 		catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.toString());
 			return -1;
 		}
 	}
 
 	/**
-	 * 
+	 * 校验XML文件是否发生变更
+	 *
 	 * @param xmlFilePath XML文件路径
 	 * @param xmlFileName XML文件名称
 	 * @param changeFileMap 变更文件map
@@ -142,9 +141,9 @@ public class ValidateXMLUtil {
 		String md5Str = getMd5ByFile(xmlFile);
 		String xmlCode = edis.get(xmlFileName);
 		String targetFilePath = 
-//					System.getProperty("user.dir")+
-//					File.separator+"target"+
-				".."+File.separator+"webapps"+
+					System.getProperty("user.dir")+
+					File.separator+"target"+
+//				".."+File.separator+"webapps"+
 				File.separator+"billjcRace"+
 				File.separator+"WEB-INF"+
 				File.separator+"classes"+File.separator+"com"+
@@ -167,8 +166,11 @@ public class ValidateXMLUtil {
 	}
 
 	/**
-	 * 覆盖掉原文件
+	 * 覆盖掉原Mapper XML文件
+	 *
+	 * @param filePath
 	 * @param xmlFile
+	 * @param targetFilePath
 	 */
 	private static void fileOutput(String filePath, File xmlFile, String targetFilePath){
 		BufferedReader bufr = null;
@@ -177,27 +179,25 @@ public class ValidateXMLUtil {
         {
             bufr = new BufferedReader(new FileReader(filePath));
             bufw = new BufferedWriter(new FileWriter(targetFilePath));
- 
             String line = null;
- 
             while((line=bufr.readLine())!=null)
             {
                 bufw.write(line);
                 bufw.newLine();
                 bufw.flush();
- 
             }
         }
         catch (IOException e)
         {
-            e.printStackTrace();
+            log.error(e.toString());
         }
         finally
         {
             try
             {
-                if(bufr!=null)
+                if(bufr!=null){
                     bufr.close();
+                }
             }
             catch (IOException e)
             {
@@ -242,7 +242,7 @@ public class ValidateXMLUtil {
                     in.close();
         		}
         	} catch (IOException e) {
-        		e.printStackTrace();
+        		log.error(e.toString());
         	}
         }
         return value;

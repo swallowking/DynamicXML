@@ -26,7 +26,8 @@ public class Employer {
 		this.telephone = telephone;
 	}
 	
-	@Override public  String toString(){
+	@Override 
+	public String toString(){
 		return id+"\t"+name+"\t"+telephone;
 	}
 }

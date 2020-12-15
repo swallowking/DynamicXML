@@ -5,7 +5,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 /**
- * 
+ * 用于获取ApplicationContext上下文容器 Bean
+ *
  * @author   swallow
  * @version  1.0
  * @since    2020/12/5
