@@ -71,8 +71,8 @@ public class ValidateXMLUtil {
 							System.getProperty("user.dir")+
 							File.separator+"target"+
 //							".."+File.separator+"webapps"+
-							File.separator+"billjcRace"+
-							File.separator+"WEB-INF"+
+//							File.separator+"billjcRace"+
+//							File.separator+"WEB-INF"+
 							File.separator+"classes"+File.separator+"com"+
 							File.separator+"billjc"+File.separator+"race"+
 							File.separator+"dao"+File.separator+""+xmlFileName+".xml";
@@ -144,8 +144,8 @@ public class ValidateXMLUtil {
 					System.getProperty("user.dir")+
 					File.separator+"target"+
 //				".."+File.separator+"webapps"+
-				File.separator+"billjcRace"+
-				File.separator+"WEB-INF"+
+//				File.separator+"billjcRace"+
+//				File.separator+"WEB-INF"+
 				File.separator+"classes"+File.separator+"com"+
 				File.separator+"billjc"+File.separator+"race"+
 				File.separator+"dao"+File.separator+""+xmlFileName+".xml";
